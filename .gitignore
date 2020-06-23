@@ -1,0 +1,3 @@
+Files/file_json/*.json
+*.csv
+api/node_modules/*
