@@ -1,0 +1,6 @@
+sh C:\Users\Admin\report\Files\curl_get_file.sh
+node C:\Users\Admin\report\api\index.js
+zip file csv
+upload to link
+Edit content post
+inform in chatwork
