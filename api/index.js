@@ -8,7 +8,8 @@ const exportDate = myArgs[0];
 // const testFolder = '../Files/file_json/'
 const testFolder = '../downfile_json/file_json/'+exportDate+'/';
 
-
+var date_get_data = myArgs[0]
+		let datetrim = date_get_data.replace(/(\/)/gi,'')
 let f = [];
 let rd = new Promise((resolve, reject) => {
 	return fs.readdir(testFolder, (err, files) => {
@@ -93,7 +94,16 @@ rd.then((files)=>{
 			let rawdata = fs.readFileSync(testFolder+file);
 			let student = JSON.parse(rawdata);
 			const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-			let fileName = './csv/'+file+'_'+exportDate+'.csv';
+
+
+			var dir = './csv/'+datetrim;
+			if (!fs.existsSync(dir)){
+			    fs.mkdirSync(dir);
+			}
+
+
+			let fileName = dir+'/'+file+'.csv';
+
 			let csvWriter = createCsvWriter({
 			    path:   fileName  ,
 			    header: [

@@ -1,5 +1,14 @@
-var date_get_data = '2020/06/26';
+var myArgs = process.argv.slice(2);
+	console.log(myArgs[0]);
+//	return;
 
+// var date_get_data = '2020/06/26';
+if(typeof myArgs[0] === 'undefined'){
+	console.log(1);
+	return;
+}
+
+var date_get_data = myArgs[0]
 
 var timestamp_start = Number(new Date(date_get_data+' 00:00:01')); 
 console.log(Math.round(timestamp_start/1000));
