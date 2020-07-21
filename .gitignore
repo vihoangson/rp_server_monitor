@@ -1,6 +1,7 @@
 Files/file_json/*.json
 *.csv
 api/node_modules/*
+downfile_json/node_modules/*
 *.zip
-
+*.json
 *.rar
