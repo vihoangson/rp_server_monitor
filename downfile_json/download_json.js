@@ -10,11 +10,11 @@ if(typeof myArgs[0] === 'undefined'){
 
 var date_get_data = myArgs[0]
 
-var timestamp_start = Number(new Date(date_get_data+' 00:00:01')); 
+var timestamp_start = Number(new Date(date_get_data+' 00:00:01'));
 console.log(Math.round(timestamp_start/1000));
 const startTime = Math.round(timestamp_start/1000);
 
-var timestamp = Number(new Date(date_get_data+' 23:59:59')); 
+var timestamp = Number(new Date(date_get_data+' 23:59:59'));
 console.log(Math.round(timestamp/1000));
 const endTime = Math.round(timestamp/1000);
 
@@ -22,9 +22,9 @@ const endTime = Math.round(timestamp/1000);
 const query = 'cadvisor_version_info';
 const time_step = '30s';
 
-// This works perfectly well! 
-const axios = require('axios'); 
-const fs = require('fs'); 
+// This works perfectly well!
+const axios = require('axios');
+const fs = require('fs');
 
 
 // let array_query = [
@@ -85,12 +85,12 @@ let array_query = [
 ];
 array_query.forEach((v,k)=>{
 	let query = v;
-	let link = 'http://172.16.2.7:9090/api/v1/query_range?query='+query+'&start='+startTime+'&end='+endTime+'&step='+time_step;	
-	axios.get(link, {responseType: "stream"} )  
-	.then(response => {  
-	// Saving file to working directory  
+	let link = 'http://172.16.2.7:9090/api/v1/query_range?query='+query+'&start='+startTime+'&end='+(endTime)+'&step='+time_step;
+	axios.get(link, {responseType: "stream"} )
+	.then(response => {
+	// Saving file to working directory
 		date_get_data.replace('/','');
-		
+
 		let datetrim = date_get_data.replace(/(\/)/gi,'')
 
 		var dir = './file_json/'+datetrim;
@@ -98,11 +98,11 @@ array_query.forEach((v,k)=>{
 		    fs.mkdirSync(dir);
 		}
 
-	    response.data.pipe(fs.createWriteStream(dir+'/'+query+".json"));  
-	})  
-	    .catch(error => {  
-	    console.log(error);  
-	});  
+	    response.data.pipe(fs.createWriteStream(dir+'/'+query+".json"));
+	})
+	    .catch(error => {
+	    console.log(error);
+	});
 })
 
 return;
