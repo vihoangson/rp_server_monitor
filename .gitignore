@@ -2,6 +2,8 @@ Files/file_json/*.json
 *.csv
 api/node_modules/*
 downfile_json/node_modules/*
+update_to_db/node_modules/*
 *.zip
 *.json
 *.rar
+.idea
