@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const fs = require('fs');
-
+var myArgs = process.argv.slice(2);
+const exportDate = myArgs[0];
 const formatTime = function(unix_timestamp){
 
     unix_timestamp = Math.round(unix_timestamp)
@@ -47,34 +48,42 @@ var con = mysql.createConnection({
 });
 //console.log(con);
 
+let container = ['container_network_transmit_bytes_total',
+    'container_cpu_usage_seconds_total',
+    'container_memory_working_set_bytes',
+    'container_network_receive_bytes_total'];
+container.forEach((containerName)=>{
+    let file_path = '../downfile_json/file_json/'+exportDate+'/'+containerName+'.json';
+    let obj = JSON.parse(fs.readFileSync(file_path));
+    obj.data.result.forEach((v1,k1)=> {
 
+        // todo: progress 1
+        var patt = /docker/g;
+        if(patt.test(v1.metric.id)){
+            return null;
+        }
+        let process = v1.metric.id;
+        // todo: progress 2
+        let instance = v1.metric.instance.replace(':8001','');
+        let job = v1.metric.job;
+        let sql = "INSERT INTO `report_monitor`."+containerName+" (`log_date`, `log_time`, `value`,`process`,`instance`,`job`) " +
+            "VALUES ";
+        v1.values.forEach((vk,kk)=>{
+            let formatTime2 = formatTime(vk[0]);
+            let date = formatTime2.day;
+            let time = formatTime2.time;
+            let value = vk[1];
+            if(kk !== 0){
+                sql = sql + ','
+            }
+            sql = sql + "('" + date + "', '" + time + "', '" + value + "', '" + process + "','" + instance + "','" + job + "')"
+        })
 
-let file_path = '../downfile_json/file_json/20200722/container_cpu_usage_seconds_total.json';
-let obj = JSON.parse(fs.readFileSync(file_path));
-obj.data.result.forEach((v1,k1)=> {
+        con.query(sql,(error, results, fields)=>{})
 
-    // todo: progress 1
-    var patt = /docker/g;
-    if(patt.test(v1.metric.id)){
-        return null;
-    }
-    let process = v1.metric.id;
-    // todo: progress 2
-    let instance = v1.metric.instance.replace(':8001','');
-    let job = v1.metric.job;
-    v1.values.forEach((vk,kk)=>{
-        let formatTime2 = formatTime(vk[0]);
-        let date = formatTime2.day;
-        let time = formatTime2.time;
-        let value = vk[1];
+    });
+})
 
-        let sql = "INSERT INTO `report_monitor`.`container_cpu_usage_seconds_total` (`log_date`, `log_time`, `value`,`process`,`instance`,`job`) " +
-            "VALUES ('"+date+"', '"+time+"', '"+value+"', '"+process+"','"+instance+"','"+job+"');";
-        console.log(sql);
-        //con.query(sql,(error, results, fields)=>{})
-    })
-
-});
 return;
 // LOAD DATA LOCAL INFILE '"+file_name+"' INTO TABLE container_cpu_usage_seconds_total FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
 
