@@ -55,6 +55,7 @@ let container = ['container_network_transmit_bytes_total',
 container.forEach((containerName)=>{
     let file_path = '../downfile_json/file_json/'+exportDate+'/'+containerName+'.json';
     let obj = JSON.parse(fs.readFileSync(file_path));
+    let total = obj.data.result.length;
     obj.data.result.forEach((v1,k1)=> {
 
         // todo: progress 1
@@ -80,8 +81,8 @@ container.forEach((containerName)=>{
         })
 
         con.query(sql,(error, results, fields)=>{
-            console.log('Done');
-        })
+            console.log('Done: '+exportDate+' : '+k1+'/'+total+':' + sql.length);
+        })        
 
     });
 })
