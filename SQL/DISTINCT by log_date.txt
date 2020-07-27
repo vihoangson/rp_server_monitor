@@ -1,0 +1,4 @@
+select DISTINCT log_date FROM container_cpu_usage_seconds_total ORDER BY log_date;
+select DISTINCT log_date FROM container_memory_working_set_bytes ORDER BY log_date;
+select DISTINCT log_date FROM container_network_receive_bytes_total ORDER BY log_date;
+select DISTINCT log_date FROM container_network_transmit_bytes_total ORDER BY log_date;

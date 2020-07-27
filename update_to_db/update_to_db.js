@@ -79,16 +79,16 @@ container.forEach((containerName)=>{
             sql = sql + "('" + date + "', '" + time + "', '" + value + "', '" + process + "','" + instance + "','" + job + "')"
         })
 
-        con.query(sql,(error, results, fields)=>{})
+        con.query(sql,(error, results, fields)=>{
+            console.log('Done');
+        })
 
     });
 })
 
 return;
 // LOAD DATA LOCAL INFILE '"+file_name+"' INTO TABLE container_cpu_usage_seconds_total FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
-
-
-console.log(sql);
+// console.log(sql);
 //let file_name = dir+'/'+query+".json";
 // let file_name = '../downfile_json/file_json/20200723/container_cpu_usage_seconds_total.json'
 // var obj = JSON.parse(fs.readFileSync(file_name, 'utf8'));
