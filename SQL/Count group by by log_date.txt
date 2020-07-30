@@ -1,0 +1,4 @@
+select log_date, count(*) FROM container_cpu_usage_seconds_total group by log_date;
+select log_date, count(*) FROM container_memory_working_set_bytes group by log_date;
+select log_date, count(*) FROM container_network_receive_bytes_total group by log_date;
+select log_date, count(*) FROM container_network_transmit_bytes_total group by log_date;
