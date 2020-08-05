@@ -8,3 +8,4 @@ update_to_db/node_modules/*
 !package.json
 *.rar
 .idea
+.vs/*

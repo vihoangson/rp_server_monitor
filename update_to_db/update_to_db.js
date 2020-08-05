@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+﻿const mysql = require('mysql');
 const fs = require('fs');
 var myArgs = process.argv.slice(2);
 const exportDate = myArgs[0];
@@ -86,6 +86,31 @@ container.forEach((containerName)=>{
 
     });
 })
+
+
+var axios = require('axios');
+var qs = require('qs');
+var data = qs.stringify({
+    'body': 'Đã chạy testing bằng Jenkins trạng thái: Thất bại'
+});
+var config = {
+    method: 'post',
+    url: 'https://api.chatwork.com/v2/rooms/119727315/messages',
+    headers: {
+        'X-ChatWorkToken': '6598c5b05c7c3a1508f35fe465474caf',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: data
+};
+
+axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
 
 return;
 // LOAD DATA LOCAL INFILE '"+file_name+"' INTO TABLE container_cpu_usage_seconds_total FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
