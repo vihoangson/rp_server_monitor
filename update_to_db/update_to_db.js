@@ -66,7 +66,7 @@ container.forEach((containerName)=>{
         let process = v1.metric.id;
         // todo: progress 2
         let instance = v1.metric.instance.replace(':8001','');
-        let job = v1.metric.job;
+        let job = v1.metric.interface+"_"+v1.metric.job;
         let sql = "INSERT INTO `report_monitor`."+containerName+" (`log_date`, `log_time`, `value`,`process`,`instance`,`job`) " +
             "VALUES ";
         v1.values.forEach((vk,kk)=>{
@@ -82,7 +82,7 @@ container.forEach((containerName)=>{
 
         con.query(sql,(error, results, fields)=>{
             console.log('Done: '+exportDate+' : '+k1+'/'+total+':' + sql.length);
-        })        
+        })
 
     });
 })
